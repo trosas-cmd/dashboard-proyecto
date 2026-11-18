@@ -1,0 +1,49 @@
+<main class="dashboard">
+  <!-- 3. Título del dashboard -->
+  <header>
+    <div>
+      <h1>Dashboard de Métricas de Proyectos</h1>
+      <p class="subtitle">Tareas, bugs y horas registradas por proyecto</p>
+    </div>
+    <button type="button" (click)="cargarMetricas()" [disabled]="cargando()">
+      {{ cargando() ? 'Cargando…' : 'Actualizar' }}
+    </button>
+  </header>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (cargando() && metricas().length === 0) {
+    <p class="loading">Cargando métricas…</p>
+  } @else {
+    <section class="kpis">
+      <app-tarjeta-metrica etiqueta="Tareas completadas" [valor]="totalTareas()" color="#3b82f6" />
+      <app-tarjeta-metrica etiqueta="Bugs reportados" [valor]="totalBugs()" color="#ef4444" />
+      <app-tarjeta-metrica etiqueta="Horas registradas" [valor]="totalHoras()" color="#10b981" />
+    </section>
+
+    <section class="charts">
+      <!-- 4. Gráfico de barras: tareas completadas por proyecto -->
+      <app-grafico-de-barras
+        titulo="Tareas completadas por proyecto"
+        serie="Tareas"
+        [datos]="tareasPorProyecto()"
+      />
+
+      <!-- 5. Gráfico de líneas: bugs reportados por proyecto -->
+      <app-grafico-de-lineas
+        titulo="Bugs reportados por proyecto"
+        serie="Bugs"
+        [datos]="bugsPorProyecto()"
+      />
+
+      <!-- Reutilización del mismo componente con otros datos -->
+      <app-grafico-de-barras
+        class="full"
+        titulo="Horas registradas por proyecto"
+        serie="Horas"
+        color="#10b981"
+        [datos]="horasPorProyecto()"
+      />
+    </section>
+  }
+</main>
