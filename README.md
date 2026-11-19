@@ -24,7 +24,7 @@ Dashboard que obtiene métricas de proyectos (tareas completadas, bugs reportado
 ## Instalación
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/trosas-cmd/dashboard-proyecto.git
 cd dashboard-proyecto
 npm install
 ```
